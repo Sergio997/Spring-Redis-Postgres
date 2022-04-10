@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-redis-postgres
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:root}
+    jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/project-changelogs.xml
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 8
+    cache:
+      type: redis
+      redis:
+        time-to-live: 30
+        cache-null-values: false
